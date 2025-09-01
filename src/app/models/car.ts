@@ -2,6 +2,6 @@ export interface Car {
   id: number;
   brand: string;
   model: string;
-  pricePerDay: number;
+  pricePerDay: number | null;
   status: 'DOSTEPNY' | 'WYPOZYCZONY';
 }

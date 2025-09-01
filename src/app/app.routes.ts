@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
-import { CarListComponentTs } from './components/car-list.component.ts/car-list.component.ts';
+import { CarListComponent } from './components/car-list.component.ts/car-list.component.ts';
 
 export const routes: Routes = [
-  { path: '', component: CarListComponentTs },
-  { path: 'cars', component: CarListComponentTs },
+  { path: '', component: CarListComponent },
+  { path: 'cars', component: CarListComponent },
 ];
