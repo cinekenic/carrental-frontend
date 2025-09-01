@@ -1,1 +1,114 @@
-<p>car-list.component.ts works!</p>
+<div class="container mt-4">
+  <h2>Lista samochodów</h2>
+
+  @if (cars.length > 0) {
+  <table class="table table-striped mt-3">
+    <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>Marka</th>
+        <th>Model</th>
+        <th>Cena / dzień</th>
+        <th>Status</th>
+        <th>Akcje</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (car of cars; track car.id) {
+      <tr>
+        <td>{{ car.id }}</td>
+        <td>{{ car.brand }}</td>
+        <td>{{ car.model }}</td>
+        <td>{{ car.pricePerDay | currency : 'PLN' }}</td>
+        <td>
+          <span
+            class="fw-bold"
+            [class.text-success]="car.status === 'DOSTEPNY'"
+            [class.text-danger]="car.status === 'WYPOZYCZONY'"
+          >
+            {{ car.status }}
+          </span>
+        </td>
+        <td>
+          <button
+            class="btn btn-sm btn-primary me-2"
+            (click)="rentCar(car)"
+            [disabled]="car.status === 'WYPOZYCZONY'"
+          >
+            Wypożycz
+          </button>
+          <button
+            class="btn btn-sm btn-warning"
+            (click)="returnCar(car)"
+            [disabled]="car.status === 'DOSTEPNY'"
+          >
+            Zwróć
+          </button>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+  } @else {
+  <p class="text-muted">Brak samochodów w bazie.</p>
+  }
+
+  <h3 class="mt-4">➕ Dodaj samochód</h3>
+  <form (ngSubmit)="addCar()" #carForm="ngForm" class="row g-2 mt-2">
+    <!-- Marka -->
+    <div class="col-md-3">
+      <input
+        type="text"
+        class="form-control"
+        name="brand"
+        [(ngModel)]="newCar.brand"
+        placeholder="Marka"
+        required
+        #brand="ngModel"
+      />
+      @if (brand.invalid && brand.touched) {
+      <div class="text-danger small">Marka jest wymagana</div>
+      }
+    </div>
+
+    <!-- Model -->
+    <div class="col-md-3">
+      <input
+        type="text"
+        class="form-control"
+        name="model"
+        [(ngModel)]="newCar.model"
+        placeholder="Model"
+        required
+        #model="ngModel"
+      />
+      @if (model.invalid && model.touched) {
+      <div class="text-danger small">Model jest wymagana</div>
+      }
+    </div>
+
+    <!-- Cena -->
+    <div class="col-md-3">
+      <input
+        type="number"
+        class="form-control"
+        name="pricePerDay"
+        [(ngModel)]="newCar.pricePerDay"
+        placeholder="Cena za dzień"
+        required
+        min="1"
+        #price="ngModel"
+      />
+      @if (price.invalid && price.touched) {
+      <div class="text-danger small">Cena musi być większa od 0</div>
+      }
+    </div>
+
+    <!-- Przycisk -->
+    <div class="col-md-3">
+      <button type="submit" class="btn btn-success w-100" [disabled]="carForm.invalid">
+        Dodaj
+      </button>
+    </div>
+  </form>
+</div>
