@@ -1,0 +1,83 @@
+<div class="container mt-4">
+  <h2>👥 Lista klientów</h2>
+
+  @if (clients.length > 0) {
+  <table class="table table-striped mt-3">
+    <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>Imię</th>
+        <th>Nazwisko</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (client of clients; track client.id) {
+      <tr>
+        <td>{{ client.id }}</td>
+        <td>{{ client.firstName }}</td>
+        <td>{{ client.lastName }}</td>
+        <td>{{ client.email }}</td>
+      </tr>
+      }
+    </tbody>
+  </table>
+  } @else {
+  <p class="text-muted">Brak klientów w bazie.</p>
+  }
+
+  <h3 class="mt-4">➕ Dodaj klienta</h3>
+  <form #clientForm="ngForm" (ngSubmit)="addClient()" class="row g-2 mt-2">
+    <div class="col-md-3">
+      <input
+        type="text"
+        class="form-control"
+        name="firstName"
+        [(ngModel)]="newClient.firstName"
+        placeholder="Imię"
+        required
+        #firstName="ngModel"
+      />
+      @if (firstName.invalid && firstName.touched) {
+      <div class="text-danger small">Imię jest wymagane</div>
+      }
+    </div>
+
+    <div class="col-md-3">
+      <input
+        type="text"
+        class="form-control"
+        name="lastName"
+        [(ngModel)]="newClient.lastName"
+        placeholder="Nazwisko"
+        required
+        #lastName="ngModel"
+      />
+      @if (lastName.invalid && lastName.touched) {
+      <div class="text-danger small">Nazwisko jest wymagane</div>
+      }
+    </div>
+
+    <div class="col-md-4">
+      <input
+        type="email"
+        class="form-control"
+        name="email"
+        [(ngModel)]="newClient.email"
+        placeholder="Email"
+        required
+        email
+        #email="ngModel"
+      />
+      @if (email.invalid && email.touched) {
+      <div class="text-danger small">Podaj poprawny email</div>
+      }
+    </div>
+
+    <div class="col-md-2">
+      <button class="btn btn-success w-100" type="submit" [disabled]="clientForm.invalid">
+        Dodaj
+      </button>
+    </div>
+  </form>
+</div>

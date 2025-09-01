@@ -6,6 +6,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-car-list.component.ts',
+  standalone: true,
   imports: [FormsModule, CurrencyPipe],
   templateUrl: './car-list.component.ts.html',
   styleUrl: './car-list.component.ts.scss',
